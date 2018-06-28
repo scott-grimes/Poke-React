@@ -1,6 +1,6 @@
-var PokeCenter = (props) => {
+var PokeCenter = ({pokemon}) => {
 
-  if(props.pokemon.id){
+  if(!pokemon.name){
     return(
       <div>
         Loading...
@@ -12,12 +12,12 @@ var PokeCenter = (props) => {
 return(
   <div style={{'display': 'grid' , 'gridTemplateColumns': '1fr 1fr'}}>
     <div id="left" style={{'gridColumnStart':'1' , 'gridColumnEnd':'2'}}>
-    <img src={props.image}>
+    <img src={pokemon.image}/>
     </div>
     <div id="right" style={{'gridColumnStart':'2' , 'gridColumnEnd':'3'}}>
-    <h3>{props.name}</h3>
-    types
-    flavortext
+    <h3>{pokemon.name}</h3>
+    {pokemon.types.map((type)=> type+' ')}
+    <div>{pokemon.flavorText}</div>
     </div>
   </div>
 );

@@ -4,16 +4,32 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pokemonList:[],
-      selected:{}
+      ids:{},
+      selected:{},
+      names:[]
     }
-
+    this.fetchByName = this.fetchByName.bind(this);
   }
 
   componentWillMount() {
+    const charizard = {"name":"charizard","image":"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png","types":["flying","fire"],"flavorText":"When expelling a blast of super hot fire, the red flame at the tip of its tail burns more intensely."}
+    this.setState({selected : charizard, ids:window.defaultIDs, names: window.defaultNames})
+  }
 
+  fetchByName(name){
+    
+    if(!this.state.names.includes(name)){
+      alert('Pokemon Not Found')
+      return
+    }
 
-
+    //$('.form-control').val('');
+    this.setState({selected:{}})
+    window.fetchPokemon( this.state.ids[name] )
+    .then(response =>{
+      if(response.detail && response.detail==='Not Found'){console.log('Not Found')}
+      this.setState({selected: response});
+    })
   }
 
 
@@ -22,7 +38,7 @@ class App extends React.Component {
     <div>
       <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search /> 
+            <Search namesList={this.state.names} fetchByName={this.fetchByName}/> 
           </div>
       </nav>
       <div className="row">
@@ -47,7 +63,7 @@ const fetchPokemonList = function fetchPokemonList(generation) {
   return new Promise(function(resolve,reject){
 
     generation = 1;
-    const idOf = (x) => c = x.url.replace('https://pokeapi.co/api/v2/pokemon-species/', '').replace('/', '');
+    const idOf = (x) => x.url.replace('https://pokeapi.co/api/v2/pokemon-species/', '').replace('/', '');
 
     fetch(`https://pokeapi.co/api/v2/generation/${generation}`)
       .then(result   => result.json())
