@@ -1,9 +1,24 @@
 
 
-const Search = (props)=> (<div className="search-bar form-inline">
-  <SearchPokemon namesList={props.namesList} fetchByName={props.fetchByName} />
-  <select>{Object.keys(props.generations).map((game, i)=> (<option key = {i} value = {game}>{game}</option> ) ) }</select>
-</div>);
+class Search extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.change = this.change.bind(this);
+  }
+  
+  change (event) {
+    console.log(event.target.value);
+    this.props.updateGameSelection(event.target.value);
+  }
+  
+  render() {
+    return (<div className="search-bar form-inline">
+      <SearchPokemon namesList={this.props.namesList} fetchByName={this.props.fetchPokemonByName} />
+      <select onChange={this.change}>{Object.keys(this.props.generations).map((game, i)=> (<option key = {i} value = {game}>{game}</option> ) ) }</select>
+    </div>);
+  }
+}
 
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope

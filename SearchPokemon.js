@@ -4,7 +4,7 @@ class SearchPokemon extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: '', suggestions: [], namesList: props.namesList};
+    this.state = {value: '', suggestions: []};
     this.onChange = this.onChange.bind(this);
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
@@ -30,7 +30,7 @@ class SearchPokemon extends React.Component {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     console.log(inputValue, inputLength);
-    return inputLength === 0 ? [] : this.state.namesList.filter(name=>{
+    return inputLength === 0 ? [] : this.props.namesList.filter(name=>{
       return name.slice(0, inputLength) === inputValue;
     });
   }
